@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@google/model-viewer": "^4.0.0",
     "aframe": "^1.6.0",
     "ar.js": "^2.2.2",
     "react": "^18.3.1",

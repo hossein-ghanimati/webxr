@@ -1,36 +1,44 @@
 // @ts-nocheck
-import React, { useEffect } from 'react';
+import React from "react";
+
+// مدل‌ویور و ای‌فریم
+import '@google/model-viewer';
 import 'aframe';
-import 'ar.js';
+import 'ar.js'; // فقط برای A-Frame AR استفاده می‌شود
 
-type Props = {
-  modelPath?: string; // مسیر مدل GLB یا OBJ
-};
-
-const ARScene = ({ modelPath = '/public/model/sofa/wooden_sofa.glb' }: Props) => {
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.AFRAME) {
-      // اینجا می‌تونید از A-Frame و AR.js برای پیکربندی بیشتر استفاده کنید
-      console.log('A-Frame and AR.js loaded');
-    }
-  }, []);
-
+const ARModelViewer = () => {
+  const path = "/webxr/model/sofa/wooden_sofa.glb"
   return (
-    <div className="sketchfab-embed-wrapper size-full">
-    <a-scene embedded arjs="sourceType: webcam;">
-      <a-marker preset="hiro">
-        <a-entity
-          gltf-model="https://hossein-ghanimati.github.io/webxr/model/sofa/wooden_sofa.glb"  // اطمینان حاصل کنید که این مسیر درست است
-          scale="0.5 0.5 0.5"
-          rotation="-90 0 0"
-          onLoad={() => console.log('Model loaded successfully!')}
-          onError={() => console.error('Error loading model')}
-        ></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-  </div>
+    <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", position: "relative"}}>
+      {/* A-Frame Scene for AR */}
+      <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        {/* Marker for AR tracking */}
+        <a-marker preset="hiro">
+          {/* 3D Model */}
+          <a-entity
+            gltf-model={`url(${path})`}
+            scale="0.5 0.5 0.5"
+            position="0 0 0"
+          ></a-entity>
+        </a-marker>
+
+        {/* Camera */}
+        <a-entity camera></a-entity>
+      </a-scene>
+
+      {/* model-viewer element for displaying the 3D model */}
+      <model-viewer
+        src={path}
+        alt="3D model"
+        auto-rotate
+        camera-controls
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        style={{ width: "100%", height: "500px", position: absolute }}
+        
+      />
+    </div>
   );
 };
 
-export default ARScene;
+export default ARModelViewer;
