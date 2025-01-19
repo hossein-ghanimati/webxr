@@ -1,12 +1,13 @@
 // @ts-nocheck
 import { useEffect, useState } from "react";
-import { getBrowser, getOS } from "@/utils/public";
+import { getOSAndBrowser } from "@/utils/public";
 
 const ARModelViewer = () => {
-  const modelDefPath = "/webxr/model/sofa/wooden_sofa.glb";
-  const modelIosPath = "/webxr/model/sofa/Office_Chair.usdz"
-  const isIOS = getOS() === "iOS";
-    const isSafari = getBrowser() === "Safari";
+  const modelDefPath =
+    "https://hossein-ghanimati.github.io/webxr/model/sofa/wooden_sofa.glb";
+  const modelIosPath =
+    "https://hossein-ghanimati.github.io/webxr/model/sofa/Office_Chair.usdz";
+  const { os, browser } = getOSAndBrowser();
 
   const openUSDZInQuickLook = () => {
     const anchor = document.createElement("a");
@@ -15,11 +16,12 @@ const ARModelViewer = () => {
     document.body.appendChild(anchor); // افزودن لینک به DOM
     anchor.click(); // کلیک روی لینک
     document.body.removeChild(anchor); // حذف لینک پس از کلیک
+    console.log("asfd");
   };
 
+  alert(`OS -> ${os}, Browser -> ${browser}`);
 
-
-  return isIOS && isSafari ? (
+  return os === "iOS" && browser === "Safari" ? (
     // نمایش دکمه برای باز کردن Quick Look
     <div
       style={{
@@ -30,7 +32,7 @@ const ARModelViewer = () => {
       }}
     >
       <button
-        onClick={openUSDZInQuickLook}
+        // onClick={openUSDZInQuickLook}
         style={{
           padding: "10px 20px",
           fontSize: "16px",
@@ -41,7 +43,16 @@ const ARModelViewer = () => {
           cursor: "pointer",
         }}
       >
-        Open in AR Quick Look
+        <a
+          rel="ar"
+          href={modelIosPath}
+        >
+          <img src="" />
+          <div class="ar-glyph-background">
+            <div class="ar-icon"></div>
+            <div class="ar-text">View in Quick AR viewer</div>
+          </div>
+        </a>
       </button>
     </div>
   ) : (

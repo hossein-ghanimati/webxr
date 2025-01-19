@@ -1,38 +1,35 @@
-export const getOS = () => {
+export const getOSAndBrowser = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    return 'iOS';
-  } else if (/android/i.test(userAgent)) {
-    return 'Android';
+  // تشخیص سیستم‌عامل
+  let os = "Other";
+  if (/android/i.test(userAgent)) {
+    os = "Android";
+  } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    os = "iOS";
   }
-  return 'Other';
-}
 
-export const getBrowser = () => {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  switch (true) {
-    case /chrome/i.test(userAgent) && !/edge|opr|brave/.test(userAgent):
-      return "Chrome";
-
-    case /^((?!chrome|android).)*safari/i.test(userAgent):
-      return "Safari";
-
-    case /firefox/i.test(userAgent):
-      return "Firefox";
-
-    case /edg/i.test(userAgent):
-      return "Edge";
-
-    case /opr|opera/i.test(userAgent):
-      return "Opera";
-
-    case /brave/i.test(userAgent):
-      return "Brave";
-
-    default:
-      return "Other";
+  // تشخیص مرورگر
+  let browser = "Other";
+  if (os === "iOS") {
+    if (/CriOS/i.test(userAgent)) {
+      browser = "Chrome";  // برای Chrome در iOS
+    } else if (/Safari/i.test(userAgent) && !/Chrome/i.test(userAgent)) {
+      browser = "Safari";  // برای Safari در iOS
+    }
+  } else if (os === "Android") {
+    if (/chrome/i.test(userAgent) && !/edge|opr|brave/i.test(userAgent)) {
+      browser = "Chrome";
+    } else if (/firefox/i.test(userAgent)) {
+      browser = "Firefox";
+    } else if (/edg/i.test(userAgent)) {
+      browser = "Edge";
+    } else if (/opr|opera/i.test(userAgent)) {
+      browser = "Opera";
+    } else if (/brave/i.test(userAgent)) {
+      browser = "Brave";
+    }
   }
+
+  return { os, browser };
 };
-
