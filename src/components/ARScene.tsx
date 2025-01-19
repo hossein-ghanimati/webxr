@@ -4,9 +4,9 @@ import { getOSAndBrowser } from "@/utils/public";
 
 const ARModelViewer = () => {
   const modelDefPath =
-    "/model/sofa/wooden_sofa.glb";
+    "https://hossein-ghanimati.github.io/webxr/model/sofa/wooden_sofa.glb";
   const modelIosPath =
-    "/model/sofa/Office_Chair.usdz";
+    "https://hossein-ghanimati.github.io/webxr/model/sofa/Office_Chair.usdz";
   const { os, browser } = getOSAndBrowser();
 
   const openUSDZInQuickLook = () => {
