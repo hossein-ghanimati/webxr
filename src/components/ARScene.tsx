@@ -1,43 +1,69 @@
 // @ts-nocheck
-import React from "react";
-
-// مدل‌ویور و ای‌فریم
-import '@google/model-viewer';
-import 'aframe';
-import 'ar.js'; // فقط برای A-Frame AR استفاده می‌شود
+import { useEffect, useState } from "react";
+import { getBrowser, getOS } from "@/utils/public";
 
 const ARModelViewer = () => {
-  const path = "/webxr/model/sofa/wooden_sofa.glb"
-  return (
-    <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", position: "relative"}}>
-      {/* A-Frame Scene for AR */}
-      <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        {/* Marker for AR tracking */}
-        <a-marker preset="hiro">
-          {/* 3D Model */}
-          <a-entity
-            gltf-model={`url(${path})`}
-            scale="0.5 0.5 0.5"
-            position="0 0 0"
-          ></a-entity>
-        </a-marker>
+  const modelDefPath = "/webxr/model/sofa/wooden_sofa.glb";
+  const modelIosPath = "/webxr/model/sofa/Office_Chair.usdz"
+  const isIOS = getOS() === "iOS";
+    const isSafari = getBrowser() === "Safari";
 
-        {/* Camera */}
-        <a-entity camera></a-entity>
-      </a-scene>
+  const openUSDZInQuickLook = () => {
+    const anchor = document.createElement("a");
+    anchor.setAttribute("rel", "ar");
+    anchor.setAttribute("href", modelIosPath);
+    document.body.appendChild(anchor); // افزودن لینک به DOM
+    anchor.click(); // کلیک روی لینک
+    document.body.removeChild(anchor); // حذف لینک پس از کلیک
+  };
 
-      {/* model-viewer element for displaying the 3D model */}
-      <model-viewer
-        src={path}
-        alt="3D model"
-        auto-rotate
-        camera-controls
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        style={{ width: "100%", height: "500px", position: absolute }}
-        
-      />
+
+
+  return isIOS && isSafari ? (
+    // نمایش دکمه برای باز کردن Quick Look
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <button
+        onClick={openUSDZInQuickLook}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          backgroundColor: "#007bff",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Open in AR Quick Look
+      </button>
     </div>
+  ) : (
+    // نمایش مدل سه‌بعدی در model-viewer
+    <model-viewer
+      src={modelDefPath}
+      ios-src={modelIosPath}
+      alt="A 3D model"
+      shadow-intensity="1"
+      camera-controls
+      interaction-prompt="auto"
+      auto-rotate
+      ar
+      magic-leap
+    >
+      <div className="progress-bar hide" slot="progress-bar">
+        <div className="update-bar"></div>
+      </div>
+      <button slot="ar-button" id="ar-button">
+        View in your space
+      </button>
+    </model-viewer>
   );
 };
 
