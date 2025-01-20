@@ -14,7 +14,7 @@ export const getOSAndBrowser = () => {
   if (os === "iOS") {
     if (/CriOS/i.test(userAgent)) {
       browser = "Chrome";  // برای Chrome در iOS
-    } else if (/Safari/i.test(userAgent) && !/Chrome/i.test(userAgent)) {
+    } else if (/Safari/i.test(userAgent) && !/CriOS/i.test(userAgent)) {
       browser = "Safari";  // برای Safari در iOS
     }
   } else if (os === "Android") {

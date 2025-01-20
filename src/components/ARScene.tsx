@@ -9,20 +9,19 @@ const ARModelViewer = () => {
     "https://hossein-ghanimati.github.io/webxr/model/sofa/Office_Chair.usdz";
   const { os, browser } = getOSAndBrowser();
 
-  const openUSDZInQuickLook = () => {
-    const anchor = document.createElement("a");
-    anchor.setAttribute("rel", "ar");
-    anchor.setAttribute("href", modelIosPath);
-    document.body.appendChild(anchor); // افزودن لینک به DOM
-    anchor.click(); // کلیک روی لینک
-    document.body.removeChild(anchor); // حذف لینک پس از کلیک
-    console.log("asfd");
-  };
+  // const openUSDZInQuickLook = () => {
+  //   const anchor = document.createElement("a");
+  //   anchor.setAttribute("rel", "ar");
+  //   anchor.setAttribute("href", modelIosPath);
+  //   document.body.appendChild(anchor); // افزودن لینک به DOM
+  //   anchor.click(); // کلیک روی لینک
+  //   document.body.removeChild(anchor); // حذف لینک پس از کلیک
+  //   console.log("asfd");
+  // };
 
   alert(`OS -> ${os}, Browser -> ${browser}`);
 
   return os === "iOS" && browser === "Safari" ? (
-    // نمایش دکمه برای باز کردن Quick Look
     <div
       style={{
         display: "flex",
@@ -56,7 +55,6 @@ const ARModelViewer = () => {
       </button>
     </div>
   ) : (
-    // نمایش مدل سه‌بعدی در model-viewer
     <model-viewer
       src={modelDefPath}
       ios-src={modelIosPath}

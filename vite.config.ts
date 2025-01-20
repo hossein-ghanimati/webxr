@@ -8,8 +8,8 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   
     // ... rest of configuration
-    build: {
-        outDir: "build"
-    }
+    // build: {
+    //     outDir: "dist"
+    // }
 
 })
