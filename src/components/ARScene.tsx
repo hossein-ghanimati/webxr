@@ -9,6 +9,8 @@ const ARModelViewer = () => {
     "https://hossein-ghanimati.github.io/webxr/model/chair.usdz";
   const { os, browser } = getOSAndBrowser();
 
+  const viewer = browser === "Safari" && os == "iOS" ? modelIosPath : modelDefPath
+  const iosAR = modelIosPath;
   // const openUSDZInQuickLook = () => {
   //   const anchor = document.createElement("a");
   //   anchor.setAttribute("rel", "ar");
@@ -19,7 +21,11 @@ const ARModelViewer = () => {
   //   console.log("asfd");
   // };
 
-  alert(`OS -> ${os}, Browser -> ${browser}`);
+  // alert(`OS -> ${os}, Browser -> ${browser}`);
+
+  useEffect(() => {
+    alert(`viewr -> ${viewer}, iosAR -> ${iosAR}`  )
+  }, [])
 
   return (
     <>
@@ -53,7 +59,8 @@ const ARModelViewer = () => {
           </button>
         </div>
     <model-viewer
-      src={browser === "Safari" && os == "iOS" ? modelIosPath : modelDefPath}
+      src={viewer}
+      ios-src={modelIosPath}
       alt="A 3D model"
       shadow-intensity="1"
       camera-controls
