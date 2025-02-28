@@ -22,6 +22,36 @@ const ARModelViewer = () => {
   alert(`OS -> ${os}, Browser -> ${browser}`);
 
   return (
+    <>
+    <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <button
+            // onClick={openUSDZInQuickLook}
+            style={{
+              padding: "10px 20px",
+              fontSize: "16px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            <a rel="ar" href={modelIosPath}>
+              <img src="" />
+              <div class="ar-glyph-background">
+                <div class="ar-icon"></div>
+                <div class="ar-text">View in Quick AR viewer</div>
+              </div>
+            </a>
+          </button>
+        </div>
     <model-viewer
       src={browser === "Safari" && os == "iOS" ? modelIosPath : modelDefPath}
       alt="A 3D model"
@@ -71,6 +101,7 @@ const ARModelViewer = () => {
         </button>
       )}
     </model-viewer>
+    </>
   );
 };
 
