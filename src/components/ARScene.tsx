@@ -6,7 +6,7 @@ const ARModelViewer = () => {
   const modelDefPath =
     "https://hossein-ghanimati.github.io/webxr/model/sofa/wooden_sofa.glb";
   const modelIosPath =
-    "https://hossein-ghanimati.github.io/webxr/model/sofa/Office_Chair.usdz";
+    "https://hossein-ghanimati.github.io/webxr/model/chair.usdz";
   const { os, browser } = getOSAndBrowser();
 
   // const openUSDZInQuickLook = () => {
@@ -21,43 +21,9 @@ const ARModelViewer = () => {
 
   alert(`OS -> ${os}, Browser -> ${browser}`);
 
-  return os === "iOS" && browser === "Safari" ? (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <button
-        // onClick={openUSDZInQuickLook}
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        <a
-          rel="ar"
-          href={modelIosPath}
-        >
-          <img src="" />
-          <div class="ar-glyph-background">
-            <div class="ar-icon"></div>
-            <div class="ar-text">View in Quick AR viewer</div>
-          </div>
-        </a>
-      </button>
-    </div>
-  ) : (
+  return (
     <model-viewer
-      src={modelDefPath}
-      ios-src={modelIosPath}
+      src={browser === "Safari" && os == "iOS" ? modelIosPath : modelDefPath}
       alt="A 3D model"
       shadow-intensity="1"
       camera-controls
@@ -69,9 +35,41 @@ const ARModelViewer = () => {
       <div className="progress-bar hide" slot="progress-bar">
         <div className="update-bar"></div>
       </div>
-      <button slot="ar-button" id="ar-button">
-        View in your space
-      </button>
+      {os === "iOS" ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <button
+            // onClick={openUSDZInQuickLook}
+            style={{
+              padding: "10px 20px",
+              fontSize: "16px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            <a rel="ar" href={modelIosPath}>
+              <img src="" />
+              <div class="ar-glyph-background">
+                <div class="ar-icon"></div>
+                <div class="ar-text">View in Quick AR viewer</div>
+              </div>
+            </a>
+          </button>
+        </div>
+      ) : (
+        <button slot="ar-button" id="ar-button">
+          View in your space
+        </button>
+      )}
     </model-viewer>
   );
 };

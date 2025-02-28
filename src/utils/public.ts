@@ -1,7 +1,6 @@
 export const getOSAndBrowser = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  // تشخیص سیستم‌عامل
+  
   let os = "Other";
   if (/android/i.test(userAgent)) {
     os = "Android";
@@ -9,13 +8,15 @@ export const getOSAndBrowser = () => {
     os = "iOS";
   }
 
-  // تشخیص مرورگر
+  
+
+  
   let browser = "Other";
   if (os === "iOS") {
     if (/CriOS/i.test(userAgent)) {
-      browser = "Chrome";  // برای Chrome در iOS
+      browser = "Chrome";  
     } else if (/Safari/i.test(userAgent) && !/CriOS/i.test(userAgent)) {
-      browser = "Safari";  // برای Safari در iOS
+      browser = "Safari"; 
     }
   } else if (os === "Android") {
     if (/chrome/i.test(userAgent) && !/edge|opr|brave/i.test(userAgent)) {
@@ -30,6 +31,7 @@ export const getOSAndBrowser = () => {
       browser = "Brave";
     }
   }
+  const isDesktop = !/Mobi|Android|iPhone|iPad/.test(userAgent);
 
-  return { os, browser };
+  return { os, browser, isDesktop, userAgent };
 };
