@@ -4,12 +4,12 @@ import { getOSAndBrowser } from "@/utils/public";
 
 const ARModelViewer = () => {
   const modelDefPath =
-    "https://hossein-ghanimati.github.io/webxr/model/sofa/wooden_sofa.glb";
+    "/model/sofa/wooden_sofa.glb";
   const modelIosPath =
-    "https://hossein-ghanimati.github.io/webxr/model/chair.usdz";
+    "/model/chair.usdz";
   const { os, browser } = getOSAndBrowser();
 
-  const viewer = browser === "Safari" && os == "iOS" ? modelIosPath : modelDefPath
+  const viewer = browser === false ? modelIosPath : modelDefPath
   const iosAR = modelIosPath;
   // const openUSDZInQuickLook = () => {
   //   const anchor = document.createElement("a");
@@ -21,9 +21,10 @@ const ARModelViewer = () => {
   //   console.log("asfd");
   // };
 
-  // alert(`OS -> ${os}, Browser -> ${browser}`);
+  
 
   useEffect(() => {
+    alert(`OS -> ${os}, Browser -> ${browser}`);
     alert(`viewr -> ${viewer}, iosAR -> ${iosAR}`  )
   }, [])
 
@@ -60,7 +61,7 @@ const ARModelViewer = () => {
         </div>
     <model-viewer
       src={viewer}
-      ios-src={modelIosPath}
+      // ios-src={modelIosPath}
       alt="A 3D model"
       shadow-intensity="1"
       camera-controls
